@@ -20,6 +20,4 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 page.page(screen, 0)
         screen.blit(background_lobby, (0, 0))
-        pygame.display.flip()
-
-
+        pygame.display.flip() 

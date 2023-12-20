@@ -19,11 +19,13 @@ def launch():
         nb_cubes INTEGER,
         nb_camera INTEGER,
         nb_bouton INTEGER,
-        nb_orbe INTEGER,
+        nb_interrupteur INTEGER,
         nb_plateformes_mobile INTEGER,
+        nb_orbe INTEGER,
         nb_tourelle INTEGER,
         gateau BOOLEAN,
         acide_mortel BOOLEAN,
+        compagnion BOOLEAN,
         PRIMARY KEY(num_test));
         """)
 
