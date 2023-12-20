@@ -3,6 +3,13 @@ import pygame
 import speedrun
 import sqlite3
 
+def SoundEasterEgg(type):
+    if type=="portail":
+        pygame.mixer.init()
+        test = pygame.mixer.Sound("Dialogues\\19\\GLaDOS_15_part1_entry-1_fr.wav")
+        test.play()
+        test.set_volume(0.1)
+    
 
 def get_things_by_num_test(num_test,thinkstosearch):
     thinks=["phase_portal_gun","nb_cubes","nb_camera","nb_bouton","nb_interrupteur","nb_orbe","nb_plateformes_mobile","nb_tourelle","gateau","acide_mortel","compagnion"]
@@ -50,8 +57,16 @@ def page(screen, numofsalle):
                 elif screen_width-140 <= mouse[0] <= screen_width-50 and screen_height-140 <= mouse[1] <= screen_height-50:
                     if numofsalle<17:
                         numofsalle=numofsalle+1
-                elif screen_height/2 <= mouse[0] <= screen_height/2+200 and 90 <= mouse[1] <= 120:
+                elif screen_height/2 <= mouse[0] <= screen_height/2+200 and 70 <= mouse[1] <= 120:
                     speedrun.speedrun(screen, numofsalle)
+                elif phaseportail==1:
+                    if screen_width-220 <= mouse[0] <= screen_width-180 and 70 <= mouse[1] <= 110:
+                        print("SOUND PORTAIL BLEU")
+                elif phaseportail>1:
+                    if screen_width-180 <= mouse[0] <= screen_width-140 and 70 <= mouse[1] <= 110:
+                        print("SOUND PORTAIL JAUNE")
+                else:
+                    SoundEasterEgg("portail")
 
         mouse = pygame.mouse.get_pos()
         phaseportail=get_things_by_num_test(salle[numofsalle],0)

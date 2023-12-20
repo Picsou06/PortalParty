@@ -3,7 +3,9 @@ from csv import *
 import sqlite3
 import os
 import requests
+import wave
 from urllib.parse import urlparse, parse_qs
+from os.path import isfile, join
 def speedrun():
     n=["00-01","02-03","04-05","06-07","08","09","10","11-12","13","14","15","16","17","18","19","e00","e01","e02"]
     for i in range(1,5):
@@ -64,4 +66,25 @@ def recuperer_miniatures():
     conn.close()
 
 
-print(salle_test())
+
+def EasterEggTourelleSound(typeofeaster):
+    fichiers = [f for f in os.listdir("Son/Tourelle") if isfile(join("Son/Tourelle", f))]
+    for i in range(len(fichiers)):
+        print(f"({i}, {typeofeaster}, \"Son/Tourelle{fichiers[j]}\"),")
+
+def ListDialoguesSound():
+    fichiers = [f for f in os.listdir("Dialogues")]
+    return fichiers
+
+def parcourir_dossier(dossier):
+    i=0
+    for racine, sous_dossiers, fichiers in os.walk(dossier):
+        for fichier in fichiers:
+            chemin_complet = os.path.join(racine, fichier)
+
+            if fichier.endswith('.wav'):
+                nom_sous_dossier = os.path.relpath(racine, dossier)
+                print(f"({i}, \"{nom_sous_dossier}\", \"{chemin_complet}\"),")
+                i=i+1
+
+print(parcourir_dossier("Dialogues/"))

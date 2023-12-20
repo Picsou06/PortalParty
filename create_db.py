@@ -52,19 +52,27 @@ def launch():
     c.execute("""
         CREATE TABLE IF NOT EXISTS dialogues(
         num_dialogues INTEGER,
-        num_salle TEXT,
+        name_salle TEXT,
         dialogue TEXT,
-        PRIMARY KEY(num_dialogues));
+        PRIMARY KEY(num_dialogues,num_salle));
         """)
 
-    # Création de la table liste_dialogues
+    # # Création de la table liste_dialogues
+    # c.execute("""
+    #     CREATE TABLE IF NOT EXISTS liste_dialogues(
+    #     num_salle TEXT,
+    #     num_dialogues INTEGER,
+    #     PRIMARY KEY(num_salle, num_dialogues),
+    #     FOREIGN KEY(num_salle) REFERENCES salle_test(num_test),
+    #     FOREIGN KEY(num_dialogues) REFERENCES dialogues(num_dialogues));
+    #     """)
+    
     c.execute("""
-        CREATE TABLE IF NOT EXISTS liste_dialogues(
-        num_salle TEXT,
-        num_dialogues INTEGER,
-        PRIMARY KEY(num_salle, num_dialogues),
-        FOREIGN KEY(num_salle) REFERENCES salle_test(num_test),
-        FOREIGN KEY(num_dialogues) REFERENCES dialogues(num_dialogues));
+        CREATE TABLE IF NOT EXISTS EasterEgg(
+        number INTEGER,
+        typeofeaster TEXT,
+        whereisit TEXT,
+        PRIMARY KEY(number, typeofeaster));
         """)
 
     # ---- fin des instructions SQL

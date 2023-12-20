@@ -13,6 +13,10 @@ pygame.display.set_caption("PortalParty")
 icon = pygame.image.load("images/Ensemble/THECAKEISALIE.jpg")
 pygame.display.set_icon(icon)
 background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background.jpg"), (screen_width,screen_height))
+pygame.mixer.init()
+pygame.mixer.music.load ("Son/Still Alive.wav")  #recupère la  musique de fond 
+pygame.mixer.music.play(- 1)
+pygame.mixer.music.set_volume(0.4)
 
 running=True
 while running:
@@ -20,4 +24,4 @@ while running:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 page.page(screen, 0)
         screen.blit(background_lobby, (0, 0))
-        pygame.display.flip() 
+        pygame.display.flip()
