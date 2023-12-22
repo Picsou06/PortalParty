@@ -120,7 +120,3 @@ def launch():
     connexion.close()
 
 launch()
-    # Déconnexion
-    connexion.close()
-
-launch()
