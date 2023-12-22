@@ -1,14 +1,50 @@
-from pygame import *
 import pygame
 import speedrun
+from random import randint
 import sqlite3
 
-def SoundEasterEgg(type):
-    if type=="portail":
-        pygame.mixer.init()
-        test = pygame.mixer.Sound("Dialogues\\19\\GLaDOS_15_part1_entry-1_fr.wav")
-        test.play()
-        test.set_volume(0.1)
+def getDialogues(salle):
+    with sqlite3.connect("Portal1.db") as connexion:
+        c = connexion.cursor()
+
+        c.execute(f"SELECT whereisit FROM dialogues WHERE name_salle = \"{salle}\";")
+
+        results = c.fetchall()
+        print(results)
+
+        temp=results
+
+    pygame.mixer.init()
+    if len(temp)>0:
+        x=randint(0,len(temp)-1)
+        sound = pygame.mixer.Sound(temp[x][0])
+        sound.play()
+        sound.set_volume(0.3)
+
+def SoundEasterEgg(EasterType):
+    with sqlite3.connect("Portal1.db") as connexion:
+        c = connexion.cursor()
+
+        c.execute(f"SELECT COUNT(*) FROM EasterEgg WHERE typeofeaster = ?;", (EasterType,))
+
+        result = c.fetchone()
+
+        if result:
+            x=randint(1,result[0])
+    with sqlite3.connect("Portal1.db") as connexion:
+        c = connexion.cursor()
+
+        c.execute(f"SELECT whereisit FROM EasterEgg WHERE number = ? AND typeofeaster = ? ;", (x,EasterType,))
+
+        result = c.fetchone()
+
+        if result:
+            pygame.mixer.init()
+            sound = pygame.mixer.Sound(result[0])
+            sound.play()
+            sound.set_volume(0.5)
+            
+        
     
 
 def get_things_by_num_test(num_test,thinkstosearch):
@@ -23,13 +59,14 @@ def get_things_by_num_test(num_test,thinkstosearch):
         if result:
             return result[0]
         else:
-            return None
+            return 0
 
 
 def page(screen, numofsalle):
     screen_width, screen_height = screen.get_size()
     background_game = pygame.transform.scale(pygame.image.load("images/Ensemble/background.png"), (screen_width,screen_height))
     fleche_droite = pygame.transform.scale(pygame.image.load("images/Ensemble/DROITE.png"), (90,90))
+    GLADOS = pygame.transform.scale(pygame.image.load("images/Ensemble/GLADOS.png"), (90,90))
     fleche_gauche = pygame.transform.scale(pygame.image.load("images/Ensemble/GAUCHE.png"), (90,90))
     portailbleu = pygame.transform.scale(pygame.image.load("images/Ensemble/bleu.png"), (40,40))
     gateau = pygame.transform.scale(pygame.image.load("images/Ensemble/gateau.png"), (40,40))
@@ -46,6 +83,7 @@ def page(screen, numofsalle):
     NumberPolice = pygame.font.SysFont("bold",40)
     mouse = pygame.mouse.get_pos()
     salle=["00-01","02-03","04-05","06-07","08","09","10","11-12","13","14","15","16","17","18","19","e00","e01","e02"]
+    phaseportail=get_things_by_num_test(salle[numofsalle],0)
 
     running=True
     while running:
@@ -59,14 +97,16 @@ def page(screen, numofsalle):
                         numofsalle=numofsalle+1
                 elif screen_height/2 <= mouse[0] <= screen_height/2+200 and 70 <= mouse[1] <= 120:
                     speedrun.speedrun(screen, numofsalle)
+                elif screen_width-425 <= mouse[0] <= screen_width-310 and 480 <= mouse[1] <= 640:
+                    SoundEasterEgg("Tourelles")
+                elif 0 <= mouse[0] <= 90 and 0 <= mouse[1] <= 90:
+                    getDialogues(salle[numofsalle])
                 elif phaseportail==1:
                     if screen_width-220 <= mouse[0] <= screen_width-180 and 70 <= mouse[1] <= 110:
                         print("SOUND PORTAIL BLEU")
                 elif phaseportail>1:
                     if screen_width-180 <= mouse[0] <= screen_width-140 and 70 <= mouse[1] <= 110:
                         print("SOUND PORTAIL JAUNE")
-                else:
-                    SoundEasterEgg("portail")
 
         mouse = pygame.mouse.get_pos()
         phaseportail=get_things_by_num_test(salle[numofsalle],0)
@@ -98,6 +138,7 @@ def page(screen, numofsalle):
         texte_nbradio = NumberPolice.render(str(nbcamera), 1 ,(250,250,250))
         texte_nbtourelle = NumberPolice.render(str(nbtourelle), 1,(250,250,250))
         screen.blit(bouton, (110, 190))
+        screen.blit(GLADOS, (0, 0))
         screen.blit(cube, (135, 360))
         screen.blit(interupteur, (135, 490))
         screen.blit(orbe, (screen_width-400, 210))
@@ -111,7 +152,5 @@ def page(screen, numofsalle):
         screen.blit(texte_nborbe, (screen_width-290, 250))
         screen.blit(texte_nbradio, (screen_width-290, 400))
         screen.blit(texte_nbtourelle, (screen_width-290, 530))
-
-
 
         pygame.display.flip()

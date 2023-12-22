@@ -1,4 +1,3 @@
-from pygame import *
 import pygame
 import page
 
@@ -16,7 +15,7 @@ background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Backgr
 pygame.mixer.init()
 pygame.mixer.music.load ("Son/Still Alive.wav")  #recupère la  musique de fond 
 pygame.mixer.music.play(- 1)
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.7)
 
 running=True
 while running:
