@@ -20,6 +20,24 @@ def getDialogues(salle):
         sound = pygame.mixer.Sound(temp[x][0])
         sound.play()
         sound.set_volume(0.3)
+    else:
+        with sqlite3.connect("Portal1.db") as connexion:
+            c = connexion.cursor()
+
+            c.execute(f"SELECT whereisit FROM dialogues WHERE name_salle = \"Inutilisés\";")
+
+            results = c.fetchall()
+            print(results)
+
+            temp=results
+
+    pygame.mixer.init()
+    x=randint(0,len(temp)-1)
+    sound = pygame.mixer.Sound(temp[x][0])
+    sound.play()
+    sound.set_volume(0.3)
+
+
 
 def SoundEasterEgg(EasterType):
     with sqlite3.connect("Portal1.db") as connexion:
