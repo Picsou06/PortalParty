@@ -9,7 +9,7 @@ def get_things_by_num_test(cat,salle,thinkstosearch):
     thinks=["temps","joueur","video"]
     with sqlite3.connect("Portal1.db") as connexion:
         c = connexion.cursor()
-        c.execute(f"SELECT {thinks[thinkstosearch]} FROM speedrun WHERE salle = ? AND categorie = ?", (salle,cat))
+        c.execute(f"SELECT {thinks[thinkstosearch]} FROM speedrun JOIN categorie ON speedrun.categorie = categorie.num_categories WHERE speedrun.salle = ? AND categorie.nom = ?", (salle,cat))
 
         result = c.fetchone()
 
@@ -38,15 +38,15 @@ def speedrun(screen, numofsalle):
         Speedrun03=pygame.transform.scale(pygame.image.load(f"images/Miniature/{salle[numofsalle]}-3.jpg"), (288,180))
     else:
         Speedrun03=pygame.transform.scale(pygame.image.load(f"images/Miniature/PDV.jpg"), (288,180))
-    link1=get_things_by_num_test(1,salle[numofsalle],2)
-    link2=get_things_by_num_test(2,salle[numofsalle],2)
-    link3=get_things_by_num_test(3,salle[numofsalle],2)
-    Temps1 = get_things_by_num_test(1,salle[numofsalle],0)
-    Temps2 = get_things_by_num_test(2,salle[numofsalle],0)
-    Temps3 = get_things_by_num_test(3,salle[numofsalle],0)
-    User1 = get_things_by_num_test(1,salle[numofsalle],1)
-    User2 = get_things_by_num_test(2,salle[numofsalle],1)
-    User3 = get_things_by_num_test(3,salle[numofsalle],1)
+    link1=get_things_by_num_test("GlitchLess",salle[numofsalle],2)
+    link2=get_things_by_num_test("In Bounds",salle[numofsalle],2)
+    link3=get_things_by_num_test("Out Of bounds",salle[numofsalle],2)
+    Temps1 = get_things_by_num_test("GlitchLess",salle[numofsalle],0)
+    Temps2 = get_things_by_num_test("In Bounds",salle[numofsalle],0)
+    Temps3 = get_things_by_num_test("Out Of bounds",salle[numofsalle],0)
+    User1 = get_things_by_num_test("GlitchLess",salle[numofsalle],1)
+    User2 = get_things_by_num_test("In Bounds",salle[numofsalle],1)
+    User3 = get_things_by_num_test("Out Of bounds",salle[numofsalle],1)
 
     
     running=True

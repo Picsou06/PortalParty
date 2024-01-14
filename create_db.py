@@ -41,7 +41,7 @@ def launch():
     # Création de la table speedrun
     c.execute("""
         CREATE TABLE IF NOT EXISTS speedrun(
-        categorie INTEGER,
+        categorie INTEGER REFERENCES categorie (num_categories),
         salle TEXT,
         temps FLOAT,
         joueur TEXT,
