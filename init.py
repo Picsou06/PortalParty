@@ -1,5 +1,6 @@
 import pygame
 import page
+from random import *
 
 # Définissez une taille initiale pour la fenêtre
 initial_width = 1000
@@ -11,11 +12,13 @@ screen_width, screen_height = screen.get_size()
 pygame.display.set_caption("PortalParty")
 icon = pygame.image.load("images/Ensemble/THECAKEISALIE.jpg")
 pygame.display.set_icon(icon)
-background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background.jpg"), (screen_width,screen_height))
-pygame.mixer.init()
-pygame.mixer.music.load ("Son/Still Alive.wav")  #recupère la  musique de fond 
-pygame.mixer.music.play(- 1)
-pygame.mixer.music.set_volume(0.7)
+x = randint(1,3)
+if x == 1:
+    background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background.jpg"), (screen_width,screen_height))
+elif x == 2:
+    background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background 2.jpg"), (screen_width,screen_height))
+elif x == 3:
+    background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background 3.jpg"), (screen_width,screen_height))
 
 running=True
 while running:
