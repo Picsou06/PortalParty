@@ -3,6 +3,13 @@ import speedrun
 from random import randint
 import sqlite3
 
+pygame.mixer.init()
+pygame.mixer.music.load ("Son/Still Alive.wav")  #recupère la  musique de fond 
+pygame.mixer.music.play(- 1)
+pygame.mixer.music.set_volume(0.7)
+
+
+
 def getDialogues(salle):
     with sqlite3.connect("Portal1.db") as connexion:
         c = connexion.cursor()
@@ -36,8 +43,6 @@ def getDialogues(salle):
     sound = pygame.mixer.Sound(temp[x][0])
     sound.play()
     sound.set_volume(0.3)
-
-
 
 def SoundEasterEgg(EasterType):
     with sqlite3.connect("Portal1.db") as connexion:
@@ -97,6 +102,9 @@ def page(screen, numofsalle):
     camera = pygame.transform.scale(pygame.image.load("images/Ensemble/camera.png"), (120,120))
     tourelle = pygame.transform.scale(pygame.image.load("images/Ensemble/tourelle.png"), (110,160))
     speedrunbutton = pygame.transform.scale(pygame.image.load("images/Ensemble/SPEEDRUN.png"), (200,30))
+    Mute = pygame.transform.scale(pygame.image.load("images/son/Mute.png"), (45,45))
+    Unmute = pygame.transform.scale(pygame.image.load("images/son/Unmute.png"), (45,45))
+    Quitter = pygame.transform.scale(pygame.image.load("images/quitter.png"), (45,45))
     SallePolice = pygame.font.SysFont("bold",50)
     NumberPolice = pygame.font.SysFont("bold",40)
     mouse = pygame.mouse.get_pos()
@@ -104,6 +112,7 @@ def page(screen, numofsalle):
     phaseportail=get_things_by_num_test(salle[numofsalle],0)
 
     running=True
+    music_on = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -119,12 +128,21 @@ def page(screen, numofsalle):
                     SoundEasterEgg("Tourelles")
                 elif 0 <= mouse[0] <= 90 and 0 <= mouse[1] <= 90:
                     getDialogues(salle[numofsalle])
-                elif phaseportail==1:
+                elif screen_width-100 <= mouse[0] <= screen_width-2 and 725 <= mouse[1] <= 775:
+                    if pygame.mixer.music.get_volume() > 0: 
+                        pygame.mixer.music.set_volume(0)
+                        music_on = False
+                    else:
+                        pygame.mixer.music.set_volume(0.7)
+                        music_on = True
+                elif phaseportail==1 or phaseportail==2:
                     if screen_width-220 <= mouse[0] <= screen_width-180 and 70 <= mouse[1] <= 110:
                         print("SOUND PORTAIL BLEU")
                 elif phaseportail>1:
                     if screen_width-180 <= mouse[0] <= screen_width-140 and 70 <= mouse[1] <= 110:
                         print("SOUND PORTAIL JAUNE")
+                elif screen_width-75 <= mouse[0] <= screen_width-30 and 25 <= mouse[1] <= 60:
+                    pygame.quit()
 
         mouse = pygame.mouse.get_pos()
         phaseportail=get_things_by_num_test(salle[numofsalle],0)
@@ -170,5 +188,15 @@ def page(screen, numofsalle):
         screen.blit(texte_nborbe, (screen_width-290, 250))
         screen.blit(texte_nbradio, (screen_width-290, 400))
         screen.blit(texte_nbtourelle, (screen_width-290, 530))
+        screen.blit(Quitter, (screen_width-75, 25))
+        if music_on == True:
+            print("on")
+            screen.blit(Unmute, (950,725))
+            screen.blit(Mute, (1200,1500))
+        if music_on == False:
+            print("off")
+            screen.blit(Mute, (950,725))
+            screen.blit(Unmute, (1200,1500))
+        
 
         pygame.display.flip()
