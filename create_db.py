@@ -37,23 +37,6 @@ def launch():
         compagnion BOOLEAN,
         PRIMARY KEY(num_test));
         """)
-    # Création de la table salle_test
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS salle_test(
-        num_test TEXT,
-        phase_portal_gun INTEGER,
-        nb_cubes INTEGER,
-        nb_camera INTEGER,
-        nb_bouton INTEGER,
-        nb_interrupteur INTEGER,
-        nb_plateformes_mobile INTEGER,
-        nb_orbe INTEGER,
-        nb_tourelle INTEGER,
-        gateau BOOLEAN,
-        acide_mortel BOOLEAN,
-        compagnion BOOLEAN,
-        PRIMARY KEY(num_test));
-        """)
 
     # Création de la table speedrun
     c.execute("""
@@ -65,24 +48,7 @@ def launch():
         video TEXT,
         PRIMARY KEY(categorie, salle));
         """)
-    # Création de la table speedrun
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS speedrun(
-        categorie INTEGER,
-        salle TEXT,
-        temps FLOAT,
-        joueur TEXT,
-        video TEXT,
-        PRIMARY KEY(categorie, salle));
-        """)
 
-    # Création de la table categorie
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS categorie(
-        num_categories INTEGER,
-        nom TEXT,
-        PRIMARY KEY(num_categories));
-        """)
     # Création de la table categorie
     c.execute("""
         CREATE TABLE IF NOT EXISTS categorie(
@@ -107,12 +73,8 @@ def launch():
         whereisit TEXT,
         PRIMARY KEY(number, typeofeaster));
         """)
-
-    # ---- fin des instructions SQL
     # ---- fin des instructions SQL
 
-    # Validation
-    connexion.commit()
     # Validation
     connexion.commit()
 

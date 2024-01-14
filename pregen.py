@@ -70,7 +70,7 @@ def recuperer_miniatures():
 def EasterEggTourelleSound(typeofeaster):
     fichiers = [f for f in os.listdir("Son/Tourelle") if isfile(join("Son/Tourelle", f))]
     for i in range(len(fichiers)):
-        print(f"({i}, {typeofeaster}, \"Son/Tourelle{fichiers[j]}\"),")
+        print(f"({i}, {typeofeaster}, \"Son\\\\Tourelle\\\\{fichiers[i]}\"),")
 
 def ListDialoguesSound():
     fichiers = [f for f in os.listdir("Dialogues")]
@@ -87,4 +87,4 @@ def parcourir_dossier(dossier):
                 print(f"({i}, \"{nom_sous_dossier}\", \"{chemin_complet}\"),")
                 i=i+1
 
-print(parcourir_dossier("Dialogues/"))
+print(parcourir_dossier("Dialogues"))
