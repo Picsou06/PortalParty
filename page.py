@@ -104,7 +104,7 @@ def page(screen, numofsalle):
     speedrunbutton = pygame.transform.scale(pygame.image.load("images/Ensemble/SPEEDRUN.png"), (200,30))
     Mute = pygame.transform.scale(pygame.image.load("images/son/Mute.png"), (45,45))
     Unmute = pygame.transform.scale(pygame.image.load("images/son/Unmute.png"), (45,45))
-    Quitter = pygame.transform.scale(pygame.image.load("images/quitter.png"), (45,45))
+    Quitter = pygame.transform.scale(pygame.image.load("images/quitter.jpg"), (45,45))
     SallePolice = pygame.font.SysFont("bold",50)
     NumberPolice = pygame.font.SysFont("bold",40)
     mouse = pygame.mouse.get_pos()
