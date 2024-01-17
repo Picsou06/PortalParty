@@ -1,13 +1,6 @@
 import sqlite3
 import os
 import os
-
-def launch():
-    # Connexion
-    if os.path.exists("./Portal1.db"):
-        os.remove("./Portal1.db")
-    connexion = sqlite3.connect('Portal1.db')
-
 def launch():
     # Connexion
     if os.path.exists("./Portal1.db"):
@@ -17,9 +10,6 @@ def launch():
 
     # Récupération d'un curseur
     c = connexion.cursor()
-    # Récupération d'un curseur
-    c = connexion.cursor()
-
     # Création de la table salle_test
     c.execute("""
         CREATE TABLE IF NOT EXISTS salle_test(
@@ -80,5 +70,3 @@ def launch():
 
     # Déconnexion
     connexion.close()
-
-launch()
