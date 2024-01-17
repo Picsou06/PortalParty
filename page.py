@@ -83,6 +83,20 @@ def get_things_by_num_test(num_test,thinkstosearch):
         else:
             return 0
 
+def get_number_of_salle():
+    response=[]
+    with sqlite3.connect("Portal1.db") as connexion:
+        c = connexion.cursor()
+
+        c.execute(f"SELECT num_test FROM salle_test;", ())
+
+        result = c.fetchall()
+
+        for i in result:
+            response.append(i[0])
+        return response
+
+
 
 def page(screen, numofsalle):
     screen_width, screen_height = screen.get_size()
@@ -107,7 +121,7 @@ def page(screen, numofsalle):
     SallePolice = pygame.font.SysFont("bold",50)
     NumberPolice = pygame.font.SysFont("bold",40)
     mouse = pygame.mouse.get_pos()
-    salle=["00-01","02-03","04-05","06-07","08","09","10","11-12","13","14","15","16","17","18","19","e00","e01","e02"]
+    salle=get_number_of_salle()
     phaseportail=get_things_by_num_test(salle[numofsalle],0)
 
     running=True
@@ -124,7 +138,7 @@ def page(screen, numofsalle):
                     if numofsalle>0:
                         numofsalle=numofsalle-1
                 elif screen_width-140 <= mouse[0] <= screen_width-50 and screen_height-140 <= mouse[1] <= screen_height-50:
-                    if numofsalle<17:
+                    if numofsalle<len(salle)-1:
                         numofsalle=numofsalle+1
                 elif screen_height/2 <= mouse[0] <= screen_height/2+200 and 70 <= mouse[1] <= 120:
                     speedrun.speedrun(screen, numofsalle)
