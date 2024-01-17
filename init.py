@@ -13,12 +13,7 @@ pygame.display.set_caption("PortalParty")
 icon = pygame.image.load("images/Ensemble/THECAKEISALIE.jpg")
 pygame.display.set_icon(icon)
 x = randint(1,3)
-if x == 1:
-    background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background.jpg"), (screen_width,screen_height))
-elif x == 2:
-    background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background 2.jpg"), (screen_width,screen_height))
-elif x == 3:
-    background_lobby = pygame.transform.scale(pygame.image.load("images/Lobby/Background 3.jpg"), (screen_width,screen_height))
+background_lobby = pygame.transform.scale(pygame.image.load(f"images/Lobby/Background {x}.jpg"), (screen_width,screen_height))
 
 running=True
 while running:
